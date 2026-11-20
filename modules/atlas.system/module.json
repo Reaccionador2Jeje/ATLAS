@@ -1,0 +1,6 @@
+{
+  "id": "atlas.system",
+  "kind": "example-metadata",
+  "status": "declarative-only",
+  "note": "ATLAS v0.1 validates this metadata; it does not execute module code."
+}
