@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 use clap::{Parser, Subcommand};
-use atlas::{config::AtlasConfig, policy::CapabilityPolicy, runtime::ModuleRuntime, ModuleRegistry};
+use atlas::{config::AtlasConfig, manifest::Capability, policy::CapabilityPolicy, runtime::ModuleRuntime, ModuleRegistry};
 
 #[derive(Debug, Parser)]
 #[command(name = "atlas", version, about = "ATLAS modular technology ecosystem")]
@@ -57,7 +57,7 @@ fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
                 }
                 ModuleCommand::Plan => {
                     let mut runtime = ModuleRuntime::default();
-                    let order = runtime.prepare(&registry, &CapabilityPolicy::deny_all())?;
+                    let order = runtime.prepare(&registry, &CapabilityPolicy::deny_all().allow(Capability::SystemInfo))?;
                     println!("Validated {} module(s):", order.len());
                     for id in order { println!("  {id}: {}", runtime.state(&id).unwrap()); }
                 }
